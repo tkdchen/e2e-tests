@@ -16,11 +16,12 @@ require (
 	github.com/magefile/mage v1.13.0
 	github.com/onsi/ginkgo/v2 v2.5.1
 	github.com/onsi/gomega v1.24.0
-	github.com/openshift/api v0.0.0-20220525145417-ee5b62754c68
+	github.com/openshift/api v3.9.0+incompatible
 	github.com/openshift/library-go v0.0.0-20220525173854-9b950a41acdc
 	github.com/openshift/oc v0.0.0-alpha.0.0.20220614012638-35c7eeb5274e
 	github.com/redhat-appstudio/application-api v0.0.0-20221114151952-77cba9006505
-	github.com/redhat-appstudio/application-service v0.0.0-20221122170733-a852feca3998
+	github.com/redhat-appstudio/application-service v0.0.0-20221129172232-763cbbe1992e
+	github.com/redhat-appstudio/build-service v0.0.0-20230102115753-714a5f048d91
 	github.com/redhat-appstudio/integration-service v0.0.0-20220622135319-863425d2cad2
 	github.com/redhat-appstudio/jvm-build-service v0.0.0-20221128055414-018f50a9d68e
 	github.com/redhat-appstudio/managed-gitops/backend v0.0.0-20220506042230-3a79f373a001
@@ -53,6 +54,8 @@ replace github.com/antlr/antlr4 => github.com/antlr/antlr4 v0.0.0-20211106181442
 replace sigs.k8s.io/controller-runtime => github.com/kcp-dev/controller-runtime v0.12.2-0.20220808200255-4b60fd66e5de
 
 replace github.com/hacbs-contract/enterprise-contract-controller/api v0.0.0-00010101000000-000000000000 => github.com/hacbs-contract/enterprise-contract-controller/api v0.0.0-20221122140036-dfd646ad4f07
+
+replace github.com/openshift/api v3.9.0+incompatible => github.com/openshift/api v0.0.0-20220525145417-ee5b62754c68
 
 require (
 	contrib.go.opencensus.io/exporter/ocagent v0.7.1-0.20200907061046-05415f1de66d // indirect

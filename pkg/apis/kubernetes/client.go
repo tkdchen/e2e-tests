@@ -22,6 +22,8 @@ import (
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	crclient "sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
+
+	buildservice "github.com/redhat-appstudio/build-service/api/v1alpha1"
 )
 
 type K8sClient struct {
@@ -49,6 +51,7 @@ func init() {
 	utilruntime.Must(integrationservice.AddToScheme(scheme))
 	utilruntime.Must(jvmbuildservice.AddToScheme(scheme))
 	utilruntime.Must(ecp.AddToScheme(scheme))
+	utilruntime.Must(buildservice.AddToScheme(scheme))
 }
 
 // Kube returns the clientset for Kubernetes upstream.
