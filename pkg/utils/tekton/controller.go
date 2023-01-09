@@ -36,34 +36,35 @@ type KubeController struct {
 }
 
 type Bundles struct {
-	FBCBuilderBundle string
-	DockerBuildBundle string
-	JavaBuilderBundle string
+	FBCBuilderBundle    string
+	DockerBuildBundle   string
+	JavaBuilderBundle   string
 	NodeJSBuilderBundle string
 }
 
-func newBundles(client *kubeCl.K8sClient) (*Bundles, error) {
+func newBundles(client crclient.Client) (*Bundles, error) {
 	namespacedName := types.NamespacedName{
 		Name:      "build-pipeline-selector",
 		Namespace: "build-service",
 	}
 	bundles := &Bundles{}
 	pipelineSelector := &buildservice.BuildPipelineSelector{}
-	err := client.KubeRest().Get(context.TODO(), namespacedName, pipelineSelector)
+	err := client.Get(context.TODO(), namespacedName, pipelineSelector)
 	if err != nil {
 		return nil, err
 	}
 	for _, selector := range pipelineSelector.Spec.Selectors {
 		bundleName := selector.PipelineRef.Name
-		switch (bundleName) {
+		bundleRef := selector.PipelineRef.Bundle
+		switch bundleName {
 		case "docker-build":
-			bundles.DockerBuildBundle = bundleName
+			bundles.DockerBuildBundle = bundleRef
 		case "fbc-builder":
-			bundles.FBCBuilderBundle = bundleName
+			bundles.FBCBuilderBundle = bundleRef
 		case "java-builder":
-			bundles.JavaBuilderBundle = bundleName
+			bundles.JavaBuilderBundle = bundleRef
 		case "nodejs-builder":
-			bundles.NodeJSBuilderBundle = bundleName
+			bundles.NodeJSBuilderBundle = bundleRef
 		}
 	}
 	return bundles, nil
@@ -99,7 +100,7 @@ func (c CosignResult) Missing(prefix string) string {
 
 // Create controller for Application/Component crud operations
 func NewSuiteController(kube *kubeCl.K8sClient) (*SuiteController, error) {
-	bundles, err := newBundles(kube)
+	bundles, err := newBundles(kube.KubeRest())
 	if err != nil {
 		return nil, err
 	}
